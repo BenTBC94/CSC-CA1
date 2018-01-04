@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace CSCAssignment1.Models
+{
+    public interface ITalentRepository
+    {
+        IEnumerable<Talent> GetAll();
+        Talent Get(int id);
+        Talent Add(Talent item);
+        void Remove(int id);
+        bool Update(Talent item);
+    }
+}
