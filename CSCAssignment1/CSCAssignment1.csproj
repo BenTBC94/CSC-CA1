@@ -344,6 +344,7 @@
     <Content Include="searchTalentStart\.DS_Store" />
     <Content Include="searchTalentStart\data.json" />
     <Content Include="Views\Home\Charge.cshtml" />
+    <Content Include="Views\Home\Payment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

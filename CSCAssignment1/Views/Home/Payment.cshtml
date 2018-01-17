@@ -1,0 +1,14 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form action="/Home/Charge" method="POST">
+    <label>Amount: $5.00</label>
+    <script src="https://checkout.stripe.com/checkout.js"
+            class="stripe-button"
+            data-key="pk_test_zP7g5XnsLHlC1BzGk5HWNXbv"
+            data-description="ASP.NET Stripe Tutorial"
+            data-amount="500">
+    </script>
+</form>
+

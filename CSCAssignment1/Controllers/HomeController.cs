@@ -37,47 +37,29 @@ namespace CSCAssignment1.Controllers
             return View();
         }
 
-        public ActionResult Charge()
+        public ActionResult Payment()
         {
-            ViewBag.Message = "Learn how to process payments with Stripe";
-
-            return View(new StripeChargeModel());
+            return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Charge(StripeChargeModel model)
+        public ActionResult Charge(string stripeEmail, string stripeToken)
         {
-            if (!ModelState.IsValid)
+            var customerService = new StripeCustomerService();
+            var chargeService = new StripeChargeService();
+            var customer = customerService.Create(new StripeCustomerCreateOptions
             {
-                return View(model);
-            }
-
-            var chargeId = await ProcessPayment(model);
-            return View("Index");
-        }
-
-        private async Task<string> ProcessPayment(StripeChargeModel model)
-        {
-            return await Task.Run(() =>
-            {
-                var myCharge = new StripeChargeCreateOptions
-                {
-                    // convert the amount of £12.50 to pennies i.e. 1250
-                    Amount = (int)(model.Amount * 100),
-                    Currency = "gbp",
-                    Description = "Description for test charge",
-                    SourceCard = new StripeSourceOptions
-                    {
-                        TokenId = model.Token
-                    }
-                };
-
-                var chargeService = new StripeChargeService("your private key here");
-                var stripeCharge = chargeService.Create(myCharge);
-
-                return stripeCharge.Id;
+                Email = stripeEmail,
+                SourceToken = stripeToken
             });
+            var charge = chargeService.Create(new StripeChargeCreateOptions
+            {
+                Amount = 500,
+                Description = "ASP.NET Stripe Tutorial",
+                Currency = "usd",
+                CustomerId = customer.Id
+            });
+            return View();
         }
+
     }
 }
